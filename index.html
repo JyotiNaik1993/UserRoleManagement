@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HTML Login Form</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" ></script>
+</head>
+
+<body>
+    <div class="loginDiv">
+        <div class="imgcontainer">
+            <img src="avatar.png" alt="Avatar" class="avatar">
+          </div>
+        <form action="userManagement.html"> 
+            <label for="first">
+                Email Address
+            </label>
+            <input type="text" id="first" name="first" 
+                placeholder="you@example.com" required>
+
+            <label for="password">
+                Password:
+            </label>
+            <input type="password" id="password" name="password" 
+                placeholder="Enter your Password" required>
+
+            <div class="wrap">
+                <button type="submit">
+                    Login
+                </button>
+            </div>
+        </form>
+        
+        <!-- <p>Not registered?
+            <a href="userRegistration.html" style="text-decoration: none;">
+                Create an account
+            </a>
+        </p> -->
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

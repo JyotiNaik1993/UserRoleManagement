@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="userManagement.css">
+</head>
+
+<body>
+    <div class="buttons">
+		<button name="submit" class="action_btn submit" type="submit" value="UserData" onclick="onClickUserData()">Users Data</button>
+		<button name="submit" class="action_btn submit" type="submit" value="ReportsData" onclick="onClickReportsData()">Reports Data</button>
+    </div>
+    <div>
+        <button id="createUserBtn" name="submit" class="create_btn submit" type="submit" value="createUser" onclick="onClickCreateUser()">Create User</button>
+    </div>
+    <div class = "users-table" id="user">
+        <table class="list" id="userList">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email Address</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class = "reports-table" id="report">
+        <table class="list" id="reportList">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="create_user" id="userRegistration">
+        <h2>User Registration</h2>
+        <form action="">
+            <label for="first">First Name:</label>
+            <input type="text" id="first" name="first" required />
+
+            <label for="last">Last Name:</label>
+            <input type="text" id="last" name="last" required />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"
+                   pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$" 
+                   title="Password must contain at least one number, 
+                           one alphabet, one symbol, and be at 
+                           least 8 characters long" required />
+
+            <label for="repassword">Re-type Password:</label>
+            <input type="password" id="repassword" name="repassword" required />
+
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="select">
+                    --Select--
+                </option>
+                <option value="admin">
+                    Admin
+                </option>
+                <option value="nonAdmin">
+                    Non Admin
+                </option>
+            </select>
+
+            <button type="submit">Submit</button>
+            <button type="cancel" id="closeBtn" onclick="onClickCloseBtn()" >Close</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

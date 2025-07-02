@@ -1,0 +1,136 @@
+.users-table {
+    border-style: solid;
+    /* margin-left: 10px; */
+    padding: 20px;
+    /* width: 50%; */
+    margin: auto;
+    width: 70%;
+    /* border: 3px solid green; */
+    /* padding: 10px; */
+    display: none;
+    margin-top: 10px;
+}
+.reports-table {
+    border-style: solid;
+    /* margin-left: 10px; */
+    padding: 20px;
+    /* width: 50%; */
+    margin: auto;
+    width: 70%;
+    /* border: 3px solid green; */
+    /* padding: 10px; */
+    display: none;
+    margin-top: 10px;
+}
+
+
+table{
+    border-collapse: collapse;
+}
+
+table.list{
+    width:100%;
+}
+
+td, th {
+    border: 1px solid #761919;
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even),table.list thead>tr {
+    background-color: grey;
+}
+
+.buttons {
+    width: 960px;
+    margin: 0 auto;
+}
+  
+.action_btn {
+    display: inline-block;
+    width: calc(50% - 4px);
+    margin: 0 auto;
+}
+button {
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    background-color: #00338d;
+    font-size: 16px;
+}
+.create_btn {
+    margin: 20px 270px;
+    background-color: lightblue;
+    color:black;
+    display: none;
+}
+#userRegistration {
+    display: none;
+}
+
+.create_user {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 300px;
+    margin: 20px 590px;
+}
+
+.create_user h2 {
+    color: #00338d;
+    margin-bottom: 20px;
+}
+
+.create_user label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+.create_user input[type="text"],
+.create_user input[type="email"],
+.create_user input[type="password"],
+.create_user select {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.create_user button[type="submit"] {
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    background-color: lightblue;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.create_user button[type="submit"]:hover {
+    background-color: green;
+}
+
+.create_user button[type="cancel"] {
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    background-color: lightblue;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.create_user button[type="cancel"]:hover {
+    background-color: red;
+}
