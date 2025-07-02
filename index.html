@@ -12,11 +12,11 @@
         <div class="imgcontainer">
             <img src="avatar.png" alt="Avatar" class="avatar">
           </div>
-        <form action="userManagement.html"> 
-            <label for="first">
+        <form onsubmit=" return onFormSubmit()"> 
+            <label for="emailAddress">
                 Email Address
             </label>
-            <input type="text" id="first" name="first" 
+            <input type="text" id="emailAddress" name="emailAddress" 
                 placeholder="you@example.com" required>
 
             <label for="password">
@@ -31,14 +31,8 @@
                 </button>
             </div>
         </form>
-        
-        <!-- <p>Not registered?
-            <a href="userRegistration.html" style="text-decoration: none;">
-                Create an account
-            </a>
-        </p> -->
     </div>
-    <script src="script.js"></script>
+    <script src="login.js"></script>
 </body>
 
 </html>

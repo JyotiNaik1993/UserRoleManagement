@@ -5,9 +5,14 @@
 </head>
 
 <body>
+      <p>
+            <a href="index.html" style="text-decoration: none; margin-left: 1500px; width: 20px;">
+                Log Out
+            </a>
+        </p>
     <div class="buttons">
-		<button name="submit" class="action_btn submit" type="submit" value="UserData" onclick="onClickUserData()">Users Data</button>
-		<button name="submit" class="action_btn submit" type="submit" value="ReportsData" onclick="onClickReportsData()">Reports Data</button>
+		<button id="userBtn" name="submit" class="action_btn submit" type="submit" value="UserData" onclick="onClickUserData()">Users Data</button>
+		<button id="reportBtn" name="submit" class="action_btn submit" type="submit" value="ReportsData" onclick="onClickReportsData()">Reports Data</button>
     </div>
     <div>
         <button id="createUserBtn" name="submit" class="create_btn submit" type="submit" value="createUser" onclick="onClickCreateUser()">Create User</button>

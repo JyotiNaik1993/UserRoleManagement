@@ -1,7 +1,12 @@
 var selectedRow = null
 
-window.onload = function() {
-    if (validate()) {
+window.onload = function(){
+    let roleId = localStorage.getItem("roleId");
+    if(roleId == 1){
+        document.getElementById("userBtn").style.display = "inline-block";
+    }
+}
+ function FetchUsersData() {
         readUserData();
         //insertUserRecord(userData);
         let reportsData = readReportsData();
@@ -11,12 +16,12 @@ window.onload = function() {
         // else
         //     updateRecord(formData);
         // resetForm();
-    }
 }
 
 function readUserData() {
+    console.log("userId from local storage", localStorage.getItem("userId"));
     // Call api to get users data
-    const apiUrl = 'https://jsonplaceholder.typicode.com/users'; // Example API endpoint
+    const apiUrl = 'http://localhost:5039/api/UserRegistration/getalluser'; // Example API endpoint
 
     fetch(apiUrl)
     .then(response => {
@@ -34,11 +39,11 @@ function readUserData() {
         {
             var newRow = table.insertRow(i);
             cell1 = newRow.insertCell(0);
-            cell1.innerHTML = data[i].name;
+            cell1.innerHTML = data[i].firstName + data[i].lastName;
             cell2 = newRow.insertCell(1);
             cell2.innerHTML = data[i].email;
             cell3 = newRow.insertCell(2);
-            cell3.innerHTML = data[i].username;
+            cell3.innerHTML = data[i].roleId;
             cell4 = newRow.insertCell(3);
             cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
                             <a onClick="onDelete(this)">Delete</a>`;
@@ -52,12 +57,42 @@ function readUserData() {
 
 function readReportsData() {
     // Call api to get users data
-    var formData = {};
-    //console.log(formData);
-    formData["name"] = "Report1";
-    formData["description"] = "test report"
-    formData["link"] = "www.google.com"
-    return formData;
+    // var formData = {};
+    // //console.log(formData);
+    // formData["name"] = "Report1";
+    // formData["description"] = "test report"
+    // formData["link"] = "www.google.com"
+    // return formData;
+    const apiUrl = 'http://localhost:5039/api/Reports/getreports?userId=' + localStorage.getItem("userId");
+
+    fetch(apiUrl)
+   .then(response => {
+        
+        if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        var table = document.getElementById("reportList").getElementsByTagName('tbody')[0];
+        for(let i = 0; i < data.length; i++)
+        {
+            var newRow = table.insertRow(i);
+            cell1 = newRow.insertCell(0);
+            cell1.innerHTML = data[i].name;
+            cell2 = newRow.insertCell(1);
+            cell2.innerHTML = data[i].description;
+            cell3 = newRow.insertCell(2);
+            cell3.innerHTML = `<a href="${data[i].link}" target="_blank">${data[i].link}</a>`; //data[i].link;
+            cell4 = newRow.insertCell(3);
+            cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
+                                <a onClick="onDelete(this)">Delete</a>`;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 function insertUserRecord(data) {
@@ -91,11 +126,11 @@ function insertReportsRecord(data) {
 }
 
 function resetForm() {
-    document.getElementById("fullName").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("salary").value = "";
-    document.getElementById("city").value = "";
-    selectedRow = null;
+    document.getElementById("userList").value = "";
+    // document.getElementById("email").value = "";
+    // document.getElementById("role").value = "";
+    // document.getElementById("action").value = "";
+    // selectedRow = null;
 }
 
 function onEdit(td) {
@@ -118,21 +153,9 @@ function onDelete(td) {
         resetForm();
     }
 }
-function validate() {
-    // Call Api to validate email address and password
-    isValid = true;
-    // if (document.getElementById("fullName").value == "") {
-    //     isValid = false;
-    //     document.getElementById("fullNameValidationError").classList.remove("hide");
-    // } else {
-    //     isValid = true;
-    //     if (!document.getElementById("fullNameValidationError").classList.contains("hide"))
-    //         document.getElementById("fullNameValidationError").classList.add("hide");
-    // }
-    return isValid;
-}
 
 function onClickUserData(){
+    readUserData();
     console.log("On Click User Data");
     document.getElementById("createUserBtn").style.display = "block";
     document.getElementById("userRegistration").style.display = "none";
@@ -142,6 +165,7 @@ function onClickUserData(){
 
 function onClickReportsData(){
     console.log("On Click Reports Data");
+    readReportsData();
     document.getElementById("createUserBtn").style.display = "none";
     document.getElementById("userRegistration").style.display = "none";
     document.getElementById("user").style.display = "none";

@@ -47,7 +47,12 @@ tr:nth-child(even),table.list thead>tr {
     margin: 0 auto;
 }
   
-.action_btn {
+#userBtn {
+    display: none;
+    width: calc(50% - 4px);
+    margin: 0 auto;
+}
+#reportBtn {
     display: inline-block;
     width: calc(50% - 4px);
     margin: 0 auto;
