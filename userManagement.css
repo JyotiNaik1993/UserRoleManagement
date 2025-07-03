@@ -49,12 +49,17 @@ tr:nth-child(even),table.list thead>tr {
   
 #userBtn {
     display: none;
-    width: calc(50% - 4px);
+    width: calc(33% - 4px);
     margin: 0 auto;
 }
 #reportBtn {
+    display: none;
+    width: calc(33% - 4px);
+    margin: 0 auto;
+}
+#reports {
     display: inline-block;
-    width: calc(50% - 4px);
+    width: calc(33% - 4px);
     margin: 0 auto;
 }
 button {
@@ -74,7 +79,19 @@ button {
     color:black;
     display: none;
 }
+
+.report_btn{
+    margin: 20px 270px;
+    background-color: lightblue;
+    color:black;
+    display: none;
+}
+
 #userRegistration {
+    display: none;
+}
+
+#addReportForm {
     display: none;
 }
 

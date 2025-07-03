@@ -5,22 +5,27 @@
 </head>
 
 <body>
-      <p>
-            <a href="index.html" style="text-decoration: none; margin-left: 1500px; width: 20px;">
-                Log Out
-            </a>
-        </p>
+    <p>
+        <a href="index.html" style="text-decoration: none; margin-left: 1500px; width: 20px;">
+            Log Out
+        </a>
+    </p>
     <div class="buttons">
-		<button id="userBtn" name="submit" class="action_btn submit" type="submit" value="UserData" onclick="onClickUserData()">Users Data</button>
-		<button id="reportBtn" name="submit" class="action_btn submit" type="submit" value="ReportsData" onclick="onClickReportsData()">Reports Data</button>
+		<button id="userBtn" name="submit" class="action_btn submit" type="submit" value="UserData" onclick="onClickUserData()">Users Management</button>
+		<button id="reportBtn" name="submit" class="action_btn submit" type="submit" value="ReportsData" onclick="onClickReportsManagement()">Reports Management</button>
+        <button id="reports" name="submit" class="action_btn submit" type="submit" value="ReportsData" onclick="onClickReportsData()">Reports</button>
     </div>
     <div>
         <button id="createUserBtn" name="submit" class="create_btn submit" type="submit" value="createUser" onclick="onClickCreateUser()">Create User</button>
     </div>
-    <div class = "users-table" id="user">
+    <div>
+        <button id="addReportBtn" name="submit" class="report_btn submit" type="submit" value="addReport" onclick="onClickAddReport()">Add Report</button>
+    </div>
+    <div class = "users-table" id="user_table">
         <table class="list" id="userList">
             <thead>
                 <tr>
+                    <th>User Id</th>
                     <th>Full Name</th>
                     <th>Email Address</th>
                     <th>Role</th>
@@ -31,8 +36,22 @@
             </tbody>
         </table>
     </div>
-    <div class = "reports-table" id="report">
+    <div class = "reports-table" id="report_table">
         <table class="list" id="reportList">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class = "reports-table" id="report_table_user">
+        <table class="list" id="reportListByUser">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -47,36 +66,65 @@
     </div>
     <div class="create_user" id="userRegistration">
         <h2>User Registration</h2>
-        <form action="">
-            <label for="first">First Name:</label>
-            <input type="text" id="first" name="first" required />
+        <form onsubmit="return onSubmitCreateUser()">
+            First Name:
+            <input type="text" id="firstName" name="first" required />
 
-            <label for="last">Last Name:</label>
-            <input type="text" id="last" name="last" required />
+            Last Name:
+            <input type="text" id="lastName" name="last" required />
 
-            <label for="email">Email:</label>
+            Email:
             <input type="email" id="email" name="email" required />
 
-            <label for="password">Password:</label>
+            Password:
             <input type="password" id="password" name="password"
                    pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$" 
                    title="Password must contain at least one number, 
                            one alphabet, one symbol, and be at 
                            least 8 characters long" required />
 
-            <label for="repassword">Re-type Password:</label>
+            Re-type Password:
             <input type="password" id="repassword" name="repassword" required />
 
-            <label for="role">Role:</label>
+            Role:
             <select id="role" name="role" required>
                 <option value="select">
                     --Select--
                 </option>
-                <option value="admin">
+                <option value="1">
                     Admin
                 </option>
-                <option value="nonAdmin">
-                    Non Admin
+                <option value="2">
+                    Manager
+                </option>
+                <option value="3">
+                    Staff
+                </option>
+                <option value="4">
+                    Manager
+                </option>
+            </select>
+
+            <button type="submit">Submit</button>
+            <button type="cancel" id="closeBtn" onclick="onClickCloseBtn()" >Close</button>
+        </form>
+    </div>
+    <div class="create_user" id="addReportForm">
+        <h2>Add Report</h2>
+        <form onsubmit="return onSubmitAddReport()">
+            Report Name:
+            <input type="text" id="reportName" name="reportName" required />
+
+            Report Link:
+            <input type="text" id="reportLink" name="reportLink" required />
+
+            Description:
+            <input type="text" id="reportDescription" name="reportDescription" required />
+
+            Users:
+            <select id="user_dropdown" name="role" required>
+                <option value="select">
+                    --Select--
                 </option>
             </select>
 
