@@ -5,11 +5,9 @@
 </head>
 
 <body>
-    <p>
-        <a href="index.html" style="text-decoration: none; margin-left: 1500px; width: 20px;">
-            Log Out
-        </a>
-    </p>
+    <a class="logoutbutton" href="index.html">
+        Log Out
+    </a>
     <div class="buttons">
 		<button id="userBtn" name="submit" class="action_btn submit" type="submit" value="UserData" onclick="onClickUserData()">Users Management</button>
 		<button id="reportBtn" name="submit" class="action_btn submit" type="submit" value="ReportsData" onclick="onClickReportsManagement()">Reports Management</button>
@@ -17,11 +15,14 @@
     </div>
     <div>
         <button id="createUserBtn" name="submit" class="create_btn submit" type="submit" value="createUser" onclick="onClickCreateUser()">Create User</button>
+        
     </div>
     <div>
         <button id="addReportBtn" name="submit" class="report_btn submit" type="submit" value="addReport" onclick="onClickAddReport()">Add Report</button>
     </div>
+
     <div class = "users-table" id="user_table">
+        <input class="searchBar" type="text" id="searchInput" onkeyup="searchFunction('searchInput','userList')" placeholder="Search for users..." title="Type in a name">
         <table class="list" id="userList">
             <thead>
                 <tr>
@@ -37,6 +38,7 @@
         </table>
     </div>
     <div class = "reports-table" id="report_table">
+        <input class="searchBar" type="text" id="searchReport" onkeyup="searchFunction('searchReport','reportList')" placeholder="Search for reports..." title="Type in a name">
         <table class="list" id="reportList">
             <thead>
                 <tr>
@@ -51,6 +53,7 @@
         </table>
     </div>
     <div class = "reports-table" id="report_table_user">
+        <input class="searchBar" type="text" id="searchReportUser" onkeyup="searchFunction('searchReportUser','reportListByUser')" placeholder="Search for reports..." title="Type in a name">
         <table class="list" id="reportListByUser">
             <thead>
                 <tr>
