@@ -38,8 +38,8 @@ td, th {
     padding: 8px;
 }
 
-tr:nth-child(even),table.list thead>tr {
-    background-color: grey;
+tr:nth-child(0),table.list thead>tr {
+    background-color: lightgray;
 }
 
 .buttons {
@@ -155,4 +155,28 @@ button {
 
 .create_user button[type="cancel"]:hover {
     background-color: red;
+}
+
+.searchBar {
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    width: 20%;
+    font-size: 18px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+  }
+
+.logoutbutton {
+    display: block;
+    width: 115px;
+    height: 25px;
+    background: lightblue;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    line-height: 25px;
+    margin-left: 80%;
 }
