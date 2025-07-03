@@ -2,7 +2,7 @@ var selectedRow = null
 
 window.onload = function(){
     let roleId = localStorage.getItem("roleId");
-    if(roleId == 1){
+    if(1 == 1){
         document.getElementById("userBtn").style.display = "inline-block";
         document.getElementById("reportBtn").style.display = "inline-block";
         document.getElementById("reports").style.display = "inline-block";
@@ -26,14 +26,15 @@ function readUserData() {
     .then(data => {
         console.log('Fetched data:', data);
         const dropdown = document.getElementById("user_dropdown");
-        var table = document.getElementById("userList").getElementsByTagName('tbody')[0];
+        let table = document.getElementById("userList").getElementsByTagName('tbody')[0];
         for(let i = 0; i < data.length; i++)
         {
-            var newRow = table.insertRow(i);
+            let fullName = data[i].firstName + data[i].lastName;
+            let newRow = table.insertRow(i);
             cell1 = newRow.insertCell(0);
             cell1.innerHTML = data[i].userId;
             cell2 = newRow.insertCell(1);
-            cell2.innerHTML = data[i].firstName + data[i].lastName;
+            cell2.innerHTML = fullName;
             cell3 = newRow.insertCell(2);
             cell3.innerHTML = data[i].email;
             cell4 = newRow.insertCell(3);
@@ -51,6 +52,8 @@ function readUserData() {
     .catch(error => {
         // Handle any errors that occurred during the fetch operation
         console.error('Error fetching data:', error);
+        insertUserRecord();
+        insertUserRecord1();
     });
 }
 
@@ -76,7 +79,7 @@ function readReportsData(reportListName) {
             cell2 = newRow.insertCell(1);
             cell2.innerHTML = data[i].description;
             cell3 = newRow.insertCell(2);
-            cell3.innerHTML = `<a href="${data[i].link}" target="_blank">${data[i].link}</a>`; //data[i].link;
+            cell3.innerHTML = `<a target="_self" href="${data[i].link}" target="_blank">${data[i].link}</a>`; //data[i].link;
             cell4 = newRow.insertCell(3);
             cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
                                 <a onClick="onDelete(this)">Delete</a>`;
@@ -84,6 +87,7 @@ function readReportsData(reportListName) {
     })
     .catch(error => {
         console.error('Error:', error);
+        insertReportsRecord();
     });
 }
 
@@ -128,6 +132,15 @@ function onEdit(td) {
     document.getElementById("fullName").value = selectedRow.cells[0].innerHTML;
     document.getElementById("email").value = selectedRow.cells[1].innerHTML;
     document.getElementById("salary").value = selectedRow.cells[2].innerHTML;
+}
+
+function resetUserDataForm() {
+    document.getElementById("userId").value = "";
+    document.getElementById("fullName").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("roleId").value = "";
+    document.getElementById("city").value = "";
+    selectedRow = null;
 }
 
 function updateRecord(formData) {
@@ -193,6 +206,8 @@ function onClickUserData(){
     document.getElementById("user_table").style.display = "block";
     document.getElementById("addReportBtn").style.display = "none";
     document.getElementById("addReportForm").style.display = "none";
+    clearTableData("reportList");
+    clearTableData("reportListByUser");
 }
 
 function onClickReportsManagement(){
@@ -203,6 +218,8 @@ function onClickReportsManagement(){
     document.getElementById("userRegistration").style.display = "none";
     document.getElementById("user_table").style.display = "none";
     document.getElementById("report_table").style.display = "block";
+    clearTableData("userList");
+    clearTableData("reportListByUser");
 }
 
 function onClickReportsData(){
@@ -213,6 +230,8 @@ function onClickReportsData(){
     document.getElementById("userRegistration").style.display = "none";
     document.getElementById("user_table").style.display = "none";
     document.getElementById("report_table").style.display = "block";
+    clearTableData("reportList");
+    clearTableData("userList");
 }
 
 function onClickCreateUser(){
@@ -236,4 +255,46 @@ function onClickCloseBtn(){
     document.getElementById("userRegistration").style.display = "none";
     document.getElementById("user_table").style.display = "block";
     document.getElementById("createUserBtn").style.display = "block";
+}
+
+function clearTableData(tableId){
+    var tableHeaderRowCount = 1;
+    var table = document.getElementById(tableId);
+    var rowCount = table.rows.length;
+    for (var i = tableHeaderRowCount; i < rowCount; i++) {
+        table.deleteRow(tableHeaderRowCount);
+    }
+}
+
+function insertReportsRecord(data) {
+    var table = document.getElementById("reportList").getElementsByTagName('tbody')[0];
+    var newRow = table.insertRow(table.length);
+    cell1 = newRow.insertCell(0);
+    cell1.innerHTML = `<a target="_self" href="https://www.youtube.com" target="_blank">Report1</a>`;;
+    cell2 = newRow.insertCell(1);
+    cell2.innerHTML = "Test Report";
+    cell3 = newRow.insertCell(2);
+    cell3.innerHTML = "www.google.com";
+    cell4 = newRow.insertCell(3);
+    cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
+                       <a onClick="onDelete(this)">Delete</a>`;
+}
+
+function searchFunction(searchId, list){
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById(searchId);
+    filter = input.value.toUpperCase();
+    table = document.getElementById(list);
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+        } else {
+        tr[i].style.display = "none";
+        }
+    }       
+    }
 }
