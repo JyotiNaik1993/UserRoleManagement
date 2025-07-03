@@ -2,7 +2,7 @@ var selectedRow = null
 
 window.onload = function(){
     let roleId = localStorage.getItem("roleId");
-    if(1 == 1){
+    if(roleId == 1){
         document.getElementById("userBtn").style.display = "inline-block";
         document.getElementById("reportBtn").style.display = "inline-block";
         document.getElementById("reports").style.display = "inline-block";
@@ -52,12 +52,10 @@ function readUserData() {
     .catch(error => {
         // Handle any errors that occurred during the fetch operation
         console.error('Error fetching data:', error);
-        insertUserRecord();
-        insertUserRecord1();
     });
 }
 
-function readReportsData(reportListName) {
+function readReportsDataManagement() {
     const apiUrl = 'http://localhost:5039/api/Reports/getreports?userId=' + localStorage.getItem("userId");
 
     fetch(apiUrl)
@@ -70,24 +68,58 @@ function readReportsData(reportListName) {
     })
     .then(data => {
         console.log('Success:', data);
-        var table = document.getElementById(reportListName).getElementsByTagName('tbody')[0];
+        var table = document.getElementById("reportList").getElementsByTagName('tbody')[0];
         for(let i = 0; i < data.length; i++)
         {
             var newRow = table.insertRow(i);
             cell1 = newRow.insertCell(0);
-            cell1.innerHTML = data[i].name;
+            cell1.innerHTML =data[i].reportId;
             cell2 = newRow.insertCell(1);
-            cell2.innerHTML = data[i].description;
+            cell2.innerHTML = `<a target="_self" href="${data[i].link}">${data[i].name}</a>`;
             cell3 = newRow.insertCell(2);
-            cell3.innerHTML = `<a target="_self" href="${data[i].link}" target="_blank">${data[i].link}</a>`; //data[i].link;
+            cell3.innerHTML = data[i].description;
             cell4 = newRow.insertCell(3);
-            cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
-                                <a onClick="onDelete(this)">Delete</a>`;
+            cell4.innerHTML = `<a target="_self" href="${data[i].link}">${data[i].link}</a>`;
+            cell5 = newRow.insertCell(4);
+            cell5.innerHTML = `<a onClick="onEdit(this)">Edit</a>
+                                <a onClick="onDeleteReport(this)">Delete</a>`;
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        insertReportsRecord();
+    });
+}
+
+function readReportsData() {
+    const apiUrl = 'http://localhost:5039/api/Reports/getreports?userId=' + localStorage.getItem("userId");
+
+    fetch(apiUrl)
+   .then(response => {
+        
+        if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        var table = document.getElementById("reportListByUser").getElementsByTagName('tbody')[0];
+        for(let i = 0; i < data.length; i++)
+        {
+            var newRow = table.insertRow(i);
+            cell1 = newRow.insertCell(0);
+            cell1.innerHTML = `<a target="_self" href="${data[i].link}">${data[i].name}</a>`;
+            cell2 = newRow.insertCell(1);
+            cell2.innerHTML = data[i].description;
+            cell3 = newRow.insertCell(2);
+            cell3.innerHTML = `<a target="_self" href="${data[i].link}">${data[i].link}</a>`;
+            cell4 = newRow.insertCell(3);
+            cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
+                                <a onClick="onDeleteReport(this)">Delete</a>`;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 }
 
@@ -185,16 +217,27 @@ function onSubmitAddReport(){
 }
 
 function onDelete(td) {
-    if (confirm('Are you sure to delete this record ?')) {
-        // row = td.parentElement.parentElement;
+    if (confirm('Are you sure to delete this user ?')) {
+        row = td.parentElement.parentElement;
         //    //get the array of all cells in that row 
         // var cells     = row.getElementsByTagName("td");
         // var textfield = cells[1].getElementsByTagName("input")[0]; 
         // alert(row.cell1);
         // alert(row.getElementsByTagName("td"));
         // alert(textfield);
+        console.log(row);
+        console.log(row.cells[0].innerText);
+        deleteUser(row.cells[0].innerText);
         //document.getElementById("employeeList").deleteRow(row.rowIndex);
         //resetForm();
+    }
+}
+function onDeleteReport(td) {
+    if (confirm('Are you sure to delete this report ?')) {
+        row = td.parentElement.parentElement;
+        console.log(row);
+        console.log(row.cells[0].innerText);
+        deleteReport(row.cells[0].innerText);
     }
 }
 
@@ -211,7 +254,7 @@ function onClickUserData(){
 }
 
 function onClickReportsManagement(){
-    readReportsData("reportList");
+    readReportsDataManagement();
     document.getElementById("addReportForm").style.display = "none";
     document.getElementById("createUserBtn").style.display = "none";
     document.getElementById("addReportBtn").style.display = "block";
@@ -223,7 +266,6 @@ function onClickReportsManagement(){
 }
 
 function onClickReportsData(){
-    readReportsData("reportListByUser");
     document.getElementById("addReportForm").style.display = "none";
     document.getElementById("createUserBtn").style.display = "none";
     document.getElementById("addReportBtn").style.display = "none";
@@ -280,14 +322,14 @@ function insertReportsRecord(data) {
                        <a onClick="onDelete(this)">Delete</a>`;
 }
 
-function searchFunction(searchId, list){
+function searchUserFunction(searchId, list){
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById(searchId);
     filter = input.value.toUpperCase();
     table = document.getElementById(list);
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
+    td = tr[i].getElementsByTagName("td")[1];
     if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -297,4 +339,103 @@ function searchFunction(searchId, list){
         }
     }       
     }
+}
+
+function searchReportFunction(searchId, list){
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById(searchId);
+    filter = input.value.toUpperCase();
+    table = document.getElementById(list);
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+        } else {
+        tr[i].style.display = "none";
+        }
+    }       
+    }
+}
+
+function deleteUser(userid){
+    const apiUrl = 'http://localhost:5039/api/UserRegistration/deleteuser?userId=' + userid;
+
+    fetch(apiUrl, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        alert("Deleted user with user id : ", userid);
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function deleteReport(reportid){
+    const apiUrl = 'http://localhost:5039/api/Reports/deletereport?reportId=' + reportid;
+
+    fetch(apiUrl, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        alert("Deleted report");
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function onSubmitAddReport(){
+    const apiUrl = 'http://localhost:5039/api/Reports/createreport';
+    const postData = {
+        name: document.getElementById("reportName").value,
+        description: document.getElementById("reportDescription").value,
+        link: document.getElementById("reportLink").value,
+        userId: document.getElementById("user_dropdown").value,
+    };
+    console.log(postData);
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData) // Convert JavaScript object to JSON string
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
