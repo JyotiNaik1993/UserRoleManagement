@@ -29,7 +29,7 @@ function readUserData() {
         let table = document.getElementById("userList").getElementsByTagName('tbody')[0];
         for(let i = 0; i < data.length; i++)
         {
-            let fullName = data[i].firstName + data[i].lastName;
+            let fullName = data[i].firstName +" "+ data[i].lastName;
             let newRow = table.insertRow(i);
             cell1 = newRow.insertCell(0);
             cell1.innerHTML = data[i].userId;
@@ -79,9 +79,7 @@ function readReportsDataManagement() {
             cell3 = newRow.insertCell(2);
             cell3.innerHTML = data[i].description;
             cell4 = newRow.insertCell(3);
-            cell4.innerHTML = `<a target="_self" href="${data[i].link}">${data[i].link}</a>`;
-            cell5 = newRow.insertCell(4);
-            cell5.innerHTML = `<a onClick="onEdit(this)">Edit</a>
+            cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
                                 <a onClick="onDeleteReport(this)">Delete</a>`;
         }
     })
@@ -111,11 +109,6 @@ function readReportsData() {
             cell1.innerHTML = `<a target="_self" href="${data[i].link}">${data[i].name}</a>`;
             cell2 = newRow.insertCell(1);
             cell2.innerHTML = data[i].description;
-            cell3 = newRow.insertCell(2);
-            cell3.innerHTML = `<a target="_self" href="${data[i].link}">${data[i].link}</a>`;
-            cell4 = newRow.insertCell(3);
-            cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
-                                <a onClick="onDeleteReport(this)">Delete</a>`;
         }
     })
     .catch(error => {
@@ -202,7 +195,6 @@ function onSubmitAddReport(){
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        isValid = true;
         return response.json();
     })
     .then(data => {
@@ -212,7 +204,6 @@ function onSubmitAddReport(){
     .catch(error => {
         console.error('Error:', error);
         alert("Please Enter Valid Username and Password");
-        isValid = false;
     });
 }
 
@@ -249,6 +240,7 @@ function onClickUserData(){
     document.getElementById("user_table").style.display = "block";
     document.getElementById("addReportBtn").style.display = "none";
     document.getElementById("addReportForm").style.display = "none";
+    document.getElementById("report_table_user").style.display = "none";
     clearTableData("reportList");
     clearTableData("reportListByUser");
 }
@@ -261,17 +253,20 @@ function onClickReportsManagement(){
     document.getElementById("userRegistration").style.display = "none";
     document.getElementById("user_table").style.display = "none";
     document.getElementById("report_table").style.display = "block";
+    document.getElementById("report_table_user").style.display = "none";
     clearTableData("userList");
     clearTableData("reportListByUser");
 }
 
 function onClickReportsData(){
+    readReportsData();
     document.getElementById("addReportForm").style.display = "none";
     document.getElementById("createUserBtn").style.display = "none";
     document.getElementById("addReportBtn").style.display = "none";
     document.getElementById("userRegistration").style.display = "none";
     document.getElementById("user_table").style.display = "none";
-    document.getElementById("report_table").style.display = "block";
+    document.getElementById("report_table").style.display = "none";
+    document.getElementById("report_table_user").style.display = "block";
     clearTableData("reportList");
     clearTableData("userList");
 }
@@ -297,6 +292,12 @@ function onClickCloseBtn(){
     document.getElementById("userRegistration").style.display = "none";
     document.getElementById("user_table").style.display = "block";
     document.getElementById("createUserBtn").style.display = "block";
+}
+
+function onClickCloseReportBtn(){
+    document.getElementById("addReportForm").style.display = "none";
+    document.getElementById("report_table").style.display = "block";
+    document.getElementById("addReportBtn").style.display = "block";
 }
 
 function clearTableData(tableId){

@@ -15,12 +15,10 @@
     </div>
     <div>
         <button id="createUserBtn" name="submit" class="create_btn submit" type="submit" value="createUser" onclick="onClickCreateUser()">Create User</button>
-        
     </div>
     <div>
         <button id="addReportBtn" name="submit" class="report_btn submit" type="submit" value="addReport" onclick="onClickAddReport()">Add Report</button>
     </div>
-
     <div class = "users-table" id="user_table">
         <input class="searchBar" type="text" id="searchInput" onkeyup="searchUserFunction('searchInput','userList')" placeholder="Search for users..." title="Type in a name">
         <table class="list" id="userList">
@@ -45,7 +43,6 @@
                     <th>ReportId</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Link</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -53,15 +50,13 @@
             </tbody>
         </table>
     </div>
-    <div class = "reports-table" id="report_table_user">
+    <div class="reports-table-user" id="report_table_user">
         <input class="searchBar" type="text" id="searchReportUser" onkeyup="searchReportFunction('searchReportUser','reportListByUser')" placeholder="Search for reports..." title="Type in a name">
         <table class="list" id="reportListByUser">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Link</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -133,7 +128,7 @@
             </select>
 
             <button type="submit">Submit</button>
-            <button type="cancel" id="closeBtn" onclick="onClickCloseBtn()" >Close</button>
+            <button type="cancel" id="closeBtn" onclick="onClickCloseReportBtn()">Close</button>
         </form>
     </div>
     <script src="script.js"></script>

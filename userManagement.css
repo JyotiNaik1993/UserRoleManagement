@@ -45,6 +45,7 @@ tr:nth-child(0),table.list thead>tr {
 .buttons {
     width: 960px;
     margin: 0 auto;
+    /* position:fixed; */
 }
   
 #userBtn {
@@ -179,4 +180,16 @@ button {
     font-weight: bold;
     line-height: 25px;
     margin-left: 80%;
+}
+#report_table_user{
+     border-style: solid;
+    /* margin-left: 10px; */
+    padding: 20px;
+    /* width: 50%; */
+    margin: auto;
+    width: 70%;
+    /* border: 3px solid green; */
+    /* padding: 10px; */
+    display: none;
+    margin-top: 10px;
 }
