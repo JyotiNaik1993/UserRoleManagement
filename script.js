@@ -1,6 +1,7 @@
 var selectedRow = null
 
 window.onload = function(){
+    onClickUserData();
     let roleId = localStorage.getItem("roleId");
     if(roleId == 1){
         document.getElementById("userBtn").style.display = "inline-block";
@@ -439,4 +440,8 @@ function onSubmitAddReport(){
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+function logout(){
+    window.location.href= "index.html";
 }

@@ -2,25 +2,24 @@
 <html>
 <head>
     <link rel="stylesheet" href="userManagement.css">
+     <div>
+        <h1 class="logo">KPMG</h1>
+        <button class="logout-btn" onclick="logout()">
+            <div class="icon"></div>
+            <div class="text">Logout</div>
+        </button>
+    </div>
 </head>
 
 <body>
-    <a class="logoutbutton" href="index.html">
-        Log Out
-    </a>
-    <div class="buttons">
+    <div class="buttons background">
 		<button id="userBtn" name="submit" class="action_btn submit" type="submit" value="UserData" onclick="onClickUserData()">Users Management</button>
 		<button id="reportBtn" name="submit" class="action_btn submit" type="submit" value="ReportsData" onclick="onClickReportsManagement()">Reports Management</button>
         <button id="reports" name="submit" class="action_btn submit" type="submit" value="ReportsUserData" onclick="onClickReportsData()">Reports</button>
     </div>
-    <div>
-        <button id="createUserBtn" name="submit" class="create_btn submit" type="submit" value="createUser" onclick="onClickCreateUser()">Create User</button>
-    </div>
-    <div>
-        <button id="addReportBtn" name="submit" class="report_btn submit" type="submit" value="addReport" onclick="onClickAddReport()">Add Report</button>
-    </div>
     <div class = "users-table" id="user_table">
         <input class="searchBar" type="text" id="searchInput" onkeyup="searchUserFunction('searchInput','userList')" placeholder="Search for users..." title="Type in a name">
+        <button id="createUserBtn" name="submit" class="create_btn submit" type="submit" value="createUser" onclick="onClickCreateUser()">Create User</button>
         <table class="list" id="userList">
             <thead>
                 <tr>
@@ -37,6 +36,7 @@
     </div>
     <div class = "reports-table" id="report_table">
         <input class="searchBar" type="text" id="searchReport" onkeyup="searchReportFunction('searchReport','reportList')" placeholder="Search for reports..." title="Type in a name">
+        <button id="addReportBtn" name="submit" class="report_btn submit" type="submit" value="addReport" onclick="onClickAddReport()">Add Report</button>
         <table class="list" id="reportList">
             <thead>
                 <tr>
