@@ -6,7 +6,7 @@ window.onload = function(){
     if(roleId == 1){
         document.getElementById("userBtn").style.display = "inline-block";
         document.getElementById("reportBtn").style.display = "inline-block";
-        document.getElementById("reports").style.display = "inline-block";
+        document.getElementById("reports").style.display = "none";
     }
 }
 
@@ -41,8 +41,8 @@ function readUserData() {
             cell4 = newRow.insertCell(3);
             cell4.innerHTML = data[i].roleName;
             cell5 = newRow.insertCell(4);
-            cell5.innerHTML = `<a onClick="onEdit(this)">Edit</a>
-                            <a onClick="onDelete(this)">Delete</a>`;
+            cell5.innerHTML = `<a class="edit_delete" onClick="onEdit(this)">Edit</a>
+                            <a class="edit_delete" onClick="onDelete(this)">Delete</a>`;
 
             const option = document.createElement('option');
             option.value = data[i].userId; // Assuming 'id' is the value you want to assign
@@ -80,8 +80,8 @@ function readReportsDataManagement() {
             cell3 = newRow.insertCell(2);
             cell3.innerHTML = data[i].description;
             cell4 = newRow.insertCell(3);
-            cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
-                                <a onClick="onDeleteReport(this)">Delete</a>`;
+            cell4.innerHTML = `<a class="edit_delete" onClick="onEdit(this)">Edit</a>
+                                <a class="edit_delete" onClick="onDeleteReport(this)">Delete</a>`;
         }
     })
     .catch(error => {
@@ -124,7 +124,6 @@ function onSubmitCreateUser() {
     data["firstName"] = document.getElementById("firstName").value;
     data["lastName"] = document.getElementById("lastName").value;
     data["roleId"] = document.getElementById("role").value;
-    
     const apiUrl = "http://localhost:5039/api/UserRegistration/createuser";
     fetch(apiUrl, {
     method: 'POST', // Specify the HTTP method as POST
@@ -160,6 +159,28 @@ function onEdit(td) {
     document.getElementById("salary").value = selectedRow.cells[2].innerHTML;
 }
 
+function editRow(button) {
+    const row = button.parentNode.parentNode;
+    const nameCell = row.cells[0];
+    const emailCell = row.cells[1];
+
+    if (button.textContent === 'Edit') {
+        // Switch to edit mode
+        row.classList.add('edit-mode');
+        nameCell.innerHTML = `<input type="text" value="${nameCell.textContent}">`;
+        emailCell.innerHTML = `<input type="text" value="${emailCell.textContent}">`;
+        button.textContent = 'Save';
+    } else {
+        // Save changes
+        row.classList.remove('edit-mode');
+        const newName = nameCell.querySelector('input').value;
+        const newEmail = emailCell.querySelector('input').value;
+        nameCell.textContent = newName;
+        emailCell.textContent = newEmail;
+        button.textContent = 'Edit';
+    }
+}
+
 function resetUserDataForm() {
     document.getElementById("userId").value = "";
     document.getElementById("fullName").value = "";
@@ -177,13 +198,13 @@ function updateRecord(formData) {
 }
 
 function onSubmitAddReport(){
-    const apiUrl = 'http://localhost:5039/api/reports/addreport';
     const postData = {
         reportName: document.getElementById("reportName").value,
         link: document.getElementById("reportLink").value,
         description : document.getElementById("reportDescription").value,
         userId : document.getElementById("user_dropdown").value
     };
+    const apiUrl = 'http://localhost:5039/api/reports/addreport';
 
     fetch(apiUrl, {
         method: 'POST',
@@ -224,11 +245,11 @@ function onDelete(td) {
         //resetForm();
     }
 }
+
 function onDeleteReport(td) {
+    // document.getElementById("deleteRecord").style.display = "block";
     if (confirm('Are you sure to delete this report ?')) {
         row = td.parentElement.parentElement;
-        console.log(row);
-        console.log(row.cells[0].innerText);
         deleteReport(row.cells[0].innerText);
     }
 }
@@ -320,8 +341,8 @@ function insertReportsRecord(data) {
     cell3 = newRow.insertCell(2);
     cell3.innerHTML = "www.google.com";
     cell4 = newRow.insertCell(3);
-    cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
-                       <a onClick="onDelete(this)">Delete</a>`;
+    cell4.innerHTML = `<a class="edit_delete" onClick="onEdit(this)">Edit</a>
+                       <a class="edit_delete" onClick="onDeleteReport(this)">Delete</a>`;
 }
 
 function searchUserFunction(searchId, list){
@@ -444,4 +465,24 @@ function onSubmitAddReport(){
 
 function logout(){
     window.location.href= "index.html";
+}
+
+function openForm() {
+    document.getElementById("userRegistration").style.display = "block";
+}
+  
+function closeForm() {
+    document.getElementById("userRegistration").style.display = "none";
+}
+
+function openReportForm() {
+    document.getElementById("addReportForm").style.display = "block";
+}
+  
+function closeReportForm() {
+    document.getElementById("addReportForm").style.display = "none";
+}
+
+function onCloseDeleteRecord(){
+    document.getElementById("deleteRecord").style.display = "none";
 }

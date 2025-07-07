@@ -49,12 +49,27 @@ td, th {
     padding: 8px;
 }
 
+.edit_delete{
+    padding: 4px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 2px solid black;
+    color: #00338d;
+    border-color:#00338d;
+    cursor: pointer;
+    background-color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 tr:nth-child(0),table.list thead>tr {
     background-color: lightgray;
 }
 
 .buttons {
     margin: 25px auto;
+    text-align: center;
 }
   
 #userBtn {
@@ -107,14 +122,6 @@ button {
     margin-top: 0;
     padding: 10px;
     font-weight: bold;
-}
-
-#userRegistration {
-    display: none;
-}
-
-#addReportForm {
-    display: none;
 }
 
 .create_user {
@@ -271,4 +278,17 @@ button {
 
 .logo{
     width: 7%;
+}
+.header_btn {
+    display: flex;
+    align-items: center; /* Vertical align the elements to the center */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+  
+.header_btn h1 {
+    margin: 0;
+}
+  
+.header_btn button {
+    margin-left: auto; /* Push this element to the right */
 }

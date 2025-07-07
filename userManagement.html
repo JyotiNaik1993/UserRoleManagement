@@ -2,7 +2,9 @@
 <html>
 <head>
     <link rel="stylesheet" href="userManagement.css">
-     <div>
+    <link rel="stylesheet" href="form_popup.css">
+
+     <div class="header_btn">
         <h1 class="logo">KPMG</h1>
         <button class="logout-btn" onclick="logout()">
             <div class="icon"></div>
@@ -12,14 +14,14 @@
 </head>
 
 <body>
-    <div class="buttons background">
+    <div class="buttons">
 		<button id="userBtn" name="submit" class="action_btn submit" type="submit" value="UserData" onclick="onClickUserData()">Users Management</button>
 		<button id="reportBtn" name="submit" class="action_btn submit" type="submit" value="ReportsData" onclick="onClickReportsManagement()">Reports Management</button>
         <button id="reports" name="submit" class="action_btn submit" type="submit" value="ReportsUserData" onclick="onClickReportsData()">Reports</button>
     </div>
     <div class = "users-table" id="user_table">
         <input class="searchBar" type="text" id="searchInput" onkeyup="searchUserFunction('searchInput','userList')" placeholder="Search for users..." title="Type in a name">
-        <button id="createUserBtn" name="submit" class="create_btn submit" type="submit" value="createUser" onclick="onClickCreateUser()">Create User</button>
+        <button id="createUserBtn" name="submit" class="create_btn submit" type="submit" value="createUser" onclick="openForm()">Create User</button>
         <table class="list" id="userList">
             <thead>
                 <tr>
@@ -36,7 +38,7 @@
     </div>
     <div class = "reports-table" id="report_table">
         <input class="searchBar" type="text" id="searchReport" onkeyup="searchReportFunction('searchReport','reportList')" placeholder="Search for reports..." title="Type in a name">
-        <button id="addReportBtn" name="submit" class="report_btn submit" type="submit" value="addReport" onclick="onClickAddReport()">Add Report</button>
+        <button id="addReportBtn" name="submit" class="report_btn submit" type="submit" value="addReport" onclick="openReportForm()">Add Report</button>
         <table class="list" id="reportList">
             <thead>
                 <tr>
@@ -63,54 +65,9 @@
             </tbody>
         </table>
     </div>
-    <div class="create_user" id="userRegistration">
-        <h2>User Registration</h2>
-        <form onsubmit="return onSubmitCreateUser()">
-            First Name:
-            <input type="text" id="firstName" name="first" required />
-
-            Last Name:
-            <input type="text" id="lastName" name="last" required />
-
-            Email:
-            <input type="email" id="email" name="email" required />
-
-            Password:
-            <input type="password" id="password" name="password"
-                   pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$" 
-                   title="Password must contain at least one number, 
-                           one alphabet, one symbol, and be at 
-                           least 8 characters long" required />
-
-            Re-type Password:
-            <input type="password" id="repassword" name="repassword" required />
-
-            Role:
-            <select id="role" name="role" required>
-                <option value="select">
-                    --Select--
-                </option>
-                <option value="1">
-                    Admin
-                </option>
-                <option value="2">
-                    Manager
-                </option>
-                <option value="3">
-                    Staff
-                </option>
-                <option value="4">
-                    Manager
-                </option>
-            </select>
-
-            <button type="submit">Submit</button>
-            <button type="cancel" id="closeBtn" onclick="onClickCloseBtn()" >Close</button>
-        </form>
-    </div>
-    <div class="create_user" id="addReportForm">
+    <div class="form-popup" id="addReportForm">
+        <form onsubmit="return onSubmitAddReport()" class="form-container">
         <h2>Add Report</h2>
-        <form onsubmit="return onSubmitAddReport()">
             Report Name:
             <input type="text" id="reportName" name="reportName" required />
 
@@ -128,7 +85,60 @@
             </select>
 
             <button type="submit">Submit</button>
-            <button type="cancel" id="closeBtn" onclick="onClickCloseReportBtn()">Close</button>
+            <button type="button" id="closeBtn" class="bnt cancel" onclick="closeReportForm()">Close</button>
+        </form>
+    </div>
+    <div class="form-popup" id="userRegistration">
+        <form onsubmit="return onSubmitCreateUser()" class="form-container">
+          <h1>Create User</h1>
+      
+          First Name:
+          <input type="text" id="firstName" name="first" required />
+
+          Last Name:
+          <input type="text" id="lastName" name="last" required />
+
+          Email:
+          <input type="email" id="email" name="email" required />
+
+          Password:
+          <input type="password" id="password" name="password"
+                 pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$" 
+                 title="Password must contain at least one number, 
+                         one alphabet, one symbol, and be at 
+                         least 8 characters long" required />
+
+          Re-type Password:
+          <input type="password" id="repassword" name="repassword" required />
+
+          Role:
+          <select id="role" name="role" required>
+              <option value="select">
+                  --Select--
+              </option>
+              <option value="1">
+                  Admin
+              </option>
+              <option value="2">
+                  Manager
+              </option>
+              <option value="3">
+                  Staff
+              </option>
+              <option value="4">
+                  Manager
+              </option>
+          </select>
+
+          <button type="submit">Submit</button>
+          <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+    <div class="form-popup" id="deleteRecord">
+        <form onsubmit="return onSubmitDeleteRecord()" class="form-container">
+        <h2>Do you want to delete this record: </h2>
+        <button type="submit" id="yesDeleteReportButton">Yes</button>
+        <button type="button" id="closeBtn" class="bnt cancel" onclick="onCloseDeleteRecord()">No</button>
         </form>
     </div>
     <script src="script.js"></script>
