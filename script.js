@@ -109,7 +109,7 @@ function readReportsData() {
         {
             var newRow = table.insertRow(i);
             cell1 = newRow.insertCell(0);
-            cell1.innerHTML = `<a target="_self" href="${data[i].link}">${data[i].name}</a>`;
+            cell1.innerHTML = `<a target="_blank" href="${data[i].link}">${data[i].name}</a>`;
             cell2 = newRow.insertCell(1);
             cell2.innerHTML = data[i].description;
         }
