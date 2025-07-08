@@ -259,6 +259,12 @@ function onClickUserData(){
     document.getElementById("addReportBtn").style.display = "none";
     document.getElementById("addReportForm").style.display = "none";
     document.getElementById("report_table_user").style.display = "none";
+    const userButton = document.getElementById("userBtn");
+    userButton.disabled = true;
+    userButton.style.backgroundColor = "lightGrey"
+    const reportButton = document.getElementById("reportBtn");
+    reportButton.disabled = false;
+    reportButton.style.backgroundColor = "white"
     clearTableData("reportList");
     clearTableData("reportListByUser");
 }
@@ -272,6 +278,12 @@ function onClickReportsManagement(){
     document.getElementById("user_table").style.display = "none";
     document.getElementById("report_table").style.display = "block";
     document.getElementById("report_table_user").style.display = "none";
+    const userButton = document.getElementById("userBtn");
+    userButton.disabled = false;
+    userButton.style.backgroundColor = "white"
+    const reportButton = document.getElementById("reportBtn");
+    reportButton.disabled = true;
+    reportButton.style.backgroundColor = "lightGrey";
     clearTableData("userList");
     clearTableData("reportListByUser");
 }
@@ -285,6 +297,9 @@ function onClickReportsData(){
     document.getElementById("user_table").style.display = "none";
     document.getElementById("report_table").style.display = "none";
     document.getElementById("report_table_user").style.display = "block";
+    const reportButton = document.getElementById("reports");
+    reportButton.disabled = true;
+    reportButton.style.backgroundColor = "lightGrey";
     clearTableData("reportList");
     clearTableData("userList");
 }
