@@ -234,17 +234,7 @@ function onSubmitAddReport(){
 function onDelete(td) {
     if (confirm('Are you sure to delete this user ?')) {
         row = td.parentElement.parentElement;
-        //    //get the array of all cells in that row 
-        // var cells     = row.getElementsByTagName("td");
-        // var textfield = cells[1].getElementsByTagName("input")[0]; 
-        // alert(row.cell1);
-        // alert(row.getElementsByTagName("td"));
-        // alert(textfield);
-        console.log(row);
-        console.log(row.cells[0].innerText);
         deleteUser(row.cells[0].innerText);
-        //document.getElementById("employeeList").deleteRow(row.rowIndex);
-        //resetForm();
     }
 }
 
@@ -257,8 +247,8 @@ function onDeleteReport(td) {
 }
 
 function onClickUserData(){
-    // readUserData();
-    insertUsersRecord();
+    readUserData();
+    //insertUsersRecord();
     document.getElementById("createUserBtn").style.display = "block";
     document.getElementById("userRegistration").style.display = "none";
     document.getElementById("report_table").style.display = "none";
