@@ -41,7 +41,7 @@ function readUserData() {
             cell4 = newRow.insertCell(3);
             cell4.innerHTML = data[i].roleName;
             cell5 = newRow.insertCell(4);
-            cell5.innerHTML = `<a class="edit_delete" onClick="onEdit(this)">Edit</a>
+            cell5.innerHTML = `<a class="edit_delete" onClick="editUserRow(this)">Edit</a>
                             <a class="edit_delete" onClick="onDelete(this)">Delete</a>`;
 
             const option = document.createElement('option');
@@ -159,7 +159,7 @@ function editReportsRow(button) {
     const reportId = row.cells[0];
     const reportName = row.cells[1];
     const reportDescription = row.cells[2];
-
+    console.log(row);
     if (button.textContent === 'Edit') {
         // Switch to edit mode
         row.classList.add('edit-mode');
