@@ -160,13 +160,13 @@ function editReportsRow(button) {
     const row = button.parentNode.parentNode;
     const reportId = row.cells[0];
     const reportName = row.cells[1];
-    const reportLink = row.cells[2];
-    const reportDescription = row.cells[3];
+    // const reportLink = row.cells[2];
+    const reportDescription = row.cells[2];
     console.log(row);
     if (button.textContent === 'Edit') {
         // Switch to edit mode
         row.classList.add('edit-mode');
-        reportLink.innerHTML = `<input type="text" value="${reportLink.textContent}">`;
+        // reportLink.innerHTML = `<input type="text" value="${reportLink.textContent}">`;
         reportName.innerHTML = `<input type="text" value="${reportName.textContent}">`;
         reportDescription.innerHTML = `<input type="text" value="${reportDescription.textContent}">`;
         console.log(row);
@@ -174,14 +174,14 @@ function editReportsRow(button) {
     } else {
         // Save changes
         console.log(row);
-        const newLink = reportLink.querySelector('input').value;
+        // const newLink = reportLink.querySelector('input').value;
         const newName = reportName.querySelector('input').value;
         const newDescrition = reportDescription.querySelector('input').value;
-        reportLink.textContent = newLink;
+        // reportLink.textContent = newLink;
         reportName.textContent = newName;
         reportDescription.textContent = newDescrition;
         row.classList.remove('edit-mode');
-        UpdateUserReport(reportId.textContent,newName,newDescrition, newLink);
+        UpdateUserReport(reportId.textContent,newName,newDescrition);
         button.textContent = 'Edit';
     }
 }
@@ -350,11 +350,9 @@ function insertReportsRecord(data) {
     cell2 = newRow.insertCell(1);
     cell2.innerHTML = "Test Report";
     cell3 = newRow.insertCell(2);
-    cell3.innerHTML = "https://www.youtube.com";
+    cell3.innerHTML = "report description";
     cell4 = newRow.insertCell(3);
-    cell4.innerHTML = "report description";
-    cell5 = newRow.insertCell(4);
-    cell5.innerHTML = `<button class="edit_delete" onclick="editReportsRow(this)">Edit</button>
+    cell4.innerHTML = `<button class="edit_delete" onclick="editReportsRow(this)">Edit</button>
                         <button class="edit_delete" onclick="deleteRow(this)">Delete</button>`
 }
 
@@ -517,13 +515,12 @@ function onCloseDeleteRecord(){
     document.getElementById("deleteRecord").style.display = "none";
 }
 
-function UpdateUserReport(reportId, reportName, reportDescription, reportLink){
+function UpdateUserReport(reportId, reportName, reportDescription){
     const apiUrl = 'http://localhost:5039/api/Reports/updatereport';
     const postData = {
         reportId: reportId,
         name: reportName,
-        description: reportDescription,
-        link: reportLink
+        description: reportDescription
     };
     console.log("api post data", postData);
     fetch(apiUrl, {
@@ -628,4 +625,7 @@ function editUserRow(button) {
         UpdateUserData(userid, newFullName.split(' ')[0], newFullName.split(' ')[1], email.textContent, role.textContent);
         button.textContent = 'Edit';
     }
+}
+function refreshPage(){
+    window.location.reload();
 }

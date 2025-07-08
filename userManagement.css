@@ -292,3 +292,6 @@ button {
 .header_btn button {
     margin-left: auto; /* Push this element to the right */
 }
+.imgcontainer{
+    cursor: pointer;
+}
