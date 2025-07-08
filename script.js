@@ -79,11 +79,9 @@ function readReportsDataManagement() {
             cell2 = newRow.insertCell(1);
             cell2.innerHTML = `<a target="_blank" href="${data[i].link}">${data[i].name}</a>`;
             cell3 = newRow.insertCell(2);
-            cell3.innerHTML = data[i].link;
+            cell3.innerHTML = data[i].description;
             cell4 = newRow.insertCell(3);
-            cell4.innerHTML = data[i].description;
-            cell5 = newRow.insertCell(4);
-            cell5.innerHTML = `<a class="edit_delete" onClick="editReportsRow(this)">Edit</a>
+            cell4.innerHTML = `<a class="edit_delete" onClick="editReportsRow(this)">Edit</a>
                                 <a class="edit_delete" onClick="onDeleteReport(this)">Delete</a>`;
         }
     })
