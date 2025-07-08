@@ -163,7 +163,7 @@ function editReportsRow(button) {
     if (button.textContent === 'Edit') {
         // Switch to edit mode
         row.classList.add('edit-mode');
-        reportId.innerHTML = `<input type="text" value="${reportId.textContent}">`;
+        // reportId.innerHTML = `<input type="text" value="${reportId.textContent}">`;
         reportName.innerHTML = `<input type="text" value="${reportName.textContent}">`;
         reportDescription.innerHTML = `<input type="text" value="${reportDescription.textContent}">`;
         console.log(row);
@@ -171,14 +171,14 @@ function editReportsRow(button) {
     } else {
         // Save changes
         console.log(row);
-        const newId = reportId.querySelector('input').value;
+        // const newId = reportId.querySelector('input').value;
         const newName = reportName.querySelector('input').value;
         const newDescrition = reportDescription.querySelector('input').value;
-        reportId.textContent = newId;
+        // reportId.textContent = newId;
         reportName.textContent = newName;
         reportDescription.textContent = newDescrition;
         row.classList.remove('edit-mode');
-        UpdateUserReport(newId,newName,newDescrition);
+        UpdateUserReport(reportId.textContent,newName,newDescrition);
         button.textContent = 'Edit';
     }
 }
