@@ -1,9 +1,9 @@
 var selectedRow = null
 
 window.onload = function(){
-    onClickUserData();
     let roleId = localStorage.getItem("roleId");
     if(roleId == 1){
+        onClickUserData();
         document.getElementById("userBtn").style.display = "inline-block";
         document.getElementById("reportBtn").style.display = "inline-block";
         document.getElementById("reports").style.display = "none";
@@ -53,6 +53,7 @@ function readUserData() {
     .catch(error => {
         // Handle any errors that occurred during the fetch operation
         console.error('Error fetching data:', error);
+        insertUsersRecord();
     });
 }
 
@@ -80,12 +81,13 @@ function readReportsDataManagement() {
             cell3 = newRow.insertCell(2);
             cell3.innerHTML = data[i].description;
             cell4 = newRow.insertCell(3);
-            cell4.innerHTML = `<a class="edit_delete" onClick="onEdit(this)">Edit</a>
+            cell4.innerHTML = `<a class="edit_delete" onClick="editReportsRow(this)">Edit</a>
                                 <a class="edit_delete" onClick="onDeleteReport(this)">Delete</a>`;
         }
     })
     .catch(error => {
         console.error('Error:', error);
+        insertReportsRecord();
     });
 }
 
@@ -152,31 +154,31 @@ function onSubmitCreateUser() {
     return true;
 }
 
-function onEdit(td) {
-    selectedRow = td.parentElement.parentElement;
-    document.getElementById("fullName").value = selectedRow.cells[0].innerHTML;
-    document.getElementById("email").value = selectedRow.cells[1].innerHTML;
-    document.getElementById("salary").value = selectedRow.cells[2].innerHTML;
-}
-
-function editRow(button) {
+function editReportsRow(button) {
     const row = button.parentNode.parentNode;
-    const nameCell = row.cells[0];
-    const emailCell = row.cells[1];
+    const reportId = row.cells[0];
+    const reportName = row.cells[1];
+    const reportDescription = row.cells[2];
 
     if (button.textContent === 'Edit') {
         // Switch to edit mode
         row.classList.add('edit-mode');
-        nameCell.innerHTML = `<input type="text" value="${nameCell.textContent}">`;
-        emailCell.innerHTML = `<input type="text" value="${emailCell.textContent}">`;
+        reportId.innerHTML = `<input type="text" value="${reportId.textContent}">`;
+        reportName.innerHTML = `<input type="text" value="${reportName.textContent}">`;
+        reportDescription.innerHTML = `<input type="text" value="${reportDescription.textContent}">`;
+        console.log(row);
         button.textContent = 'Save';
     } else {
         // Save changes
+        console.log(row);
+        const newId = reportId.querySelector('input').value;
+        const newName = reportName.querySelector('input').value;
+        const newDescrition = reportDescription.querySelector('input').value;
+        reportId.textContent = newId;
+        reportName.textContent = newName;
+        reportDescription.textContent = newDescrition;
         row.classList.remove('edit-mode');
-        const newName = nameCell.querySelector('input').value;
-        const newEmail = emailCell.querySelector('input').value;
-        nameCell.textContent = newName;
-        emailCell.textContent = newEmail;
+        UpdateUserReport(newId,newName,newDescrition);
         button.textContent = 'Edit';
     }
 }
@@ -255,7 +257,8 @@ function onDeleteReport(td) {
 }
 
 function onClickUserData(){
-    readUserData();
+    // readUserData();
+    insertUsersRecord();
     document.getElementById("createUserBtn").style.display = "block";
     document.getElementById("userRegistration").style.display = "none";
     document.getElementById("report_table").style.display = "none";
@@ -335,14 +338,31 @@ function insertReportsRecord(data) {
     var table = document.getElementById("reportList").getElementsByTagName('tbody')[0];
     var newRow = table.insertRow(table.length);
     cell1 = newRow.insertCell(0);
-    cell1.innerHTML = `<a target="_self" href="https://www.youtube.com" target="_blank">Report1</a>`;;
+    cell1.innerHTML = `<a target="_blank" href="https://www.youtube.com" target="_blank">Report1</a>`;;
     cell2 = newRow.insertCell(1);
     cell2.innerHTML = "Test Report";
     cell3 = newRow.insertCell(2);
-    cell3.innerHTML = "www.google.com";
+    cell3.innerHTML = "report description";
     cell4 = newRow.insertCell(3);
-    cell4.innerHTML = `<a class="edit_delete" onClick="onEdit(this)">Edit</a>
-                       <a class="edit_delete" onClick="onDeleteReport(this)">Delete</a>`;
+    cell4.innerHTML = `<button class="edit_delete" onclick="editReportsRow(this)">Edit</button>
+                        <button class="edit_delete" onclick="deleteRow(this)">Delete</button>`
+}
+
+function insertUsersRecord(data) {
+    var table = document.getElementById("userList").getElementsByTagName('tbody')[0];
+    let fullName = "chahat" +" "+ "jain";
+    let newRow = table.insertRow(0);
+    cell1 = newRow.insertCell(0);
+    cell1.innerHTML = 1;
+    cell2 = newRow.insertCell(1);
+    cell2.innerHTML = fullName;
+    cell3 = newRow.insertCell(2);
+    cell3.innerHTML = "chahatjain218@gmail.com";
+    cell4 = newRow.insertCell(3);
+    cell4.innerHTML = "Manager"
+    cell5 = newRow.insertCell(4);
+    cell5.innerHTML = `<button class="edit_delete" onClick="editUserRow(this)">Edit</button>
+                    <button class="edit_delete" onClick="onDelete(this)">Delete</button>`;
 }
 
 function searchUserFunction(searchId, list){
@@ -485,4 +505,114 @@ function closeReportForm() {
 
 function onCloseDeleteRecord(){
     document.getElementById("deleteRecord").style.display = "none";
+}
+
+function UpdateUserReport(reportId, reportName, reportDescription){
+    const apiUrl = 'http://localhost:5039/api/Reports/updatereport';
+    const postData = {
+        reportId: reportId,
+        name: reportName,
+        description: reportDescription
+    };
+    console.log("api post data", postData);
+    fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData) // Convert JavaScript object to JSON string
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function UpdateUserData(userid,firstName, lastName, email, roleId){
+    const apiUrl = 'http://localhost:5039/api/UserRegistration/updateuser?userId='+ userid;
+    const postData = {
+        email: email,
+        firstName: firstName,
+        lastName : lastName,
+        roleId : roleId
+    };
+
+    console.log("api post data", postData);
+
+    fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData) // Convert JavaScript object to JSON string
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function editUserRow(button) {
+    const row = button.parentNode.parentNode;
+    const userid = row.cells[0].textContent;
+    const fullName = row.cells[1];
+    const email = row.cells[2];
+    const role = row.cells[3];
+
+    if (button.textContent === 'Edit') {
+        // Switch to edit mode
+        row.classList.add('edit-mode');
+        fullName.innerHTML = `<input type="text" value="${fullName.textContent}">`;
+        email.innerHTML = `<input type="text" value="${email.textContent}">`;
+        role.innerHTML = `<select id="role" name="role" required>
+              <option value="select">
+                  --Select--
+              </option>
+              <option value="1">
+                  Admin
+              </option>
+              <option value="2">
+                  Manager
+              </option>
+              <option value="3">
+                  Staff
+              </option>
+              <option value="4">
+                  Vendor
+              </option>
+          </select>`;
+        button.textContent = 'Save';
+    } else {
+        // Save changes
+        const selectElement = document.getElementById('role');
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const selectedValue = selectedOption.value;
+        const newFullName = fullName.querySelector('input').value;
+        const newEmail = email.querySelector('input').value;
+        const newRole = selectedValue;
+
+        fullName.textContent = newFullName;
+        email.textContent = newEmail;
+        role.textContent = newRole;
+        row.classList.remove('edit-mode');
+
+        UpdateUserData(userid, newFullName.split(' ')[0], newFullName.split(' ')[1], email.textContent, role.textContent);
+        button.textContent = 'Edit';
+    }
 }
