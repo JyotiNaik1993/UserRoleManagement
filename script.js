@@ -79,9 +79,11 @@ function readReportsDataManagement() {
             cell2 = newRow.insertCell(1);
             cell2.innerHTML = `<a target="_blank" href="${data[i].link}">${data[i].name}</a>`;
             cell3 = newRow.insertCell(2);
-            cell3.innerHTML = data[i].description;
+            cell3.innerHTML = data[i].link;
             cell4 = newRow.insertCell(3);
-            cell4.innerHTML = `<a class="edit_delete" onClick="editReportsRow(this)">Edit</a>
+            cell4.innerHTML = data[i].description;
+            cell5 = newRow.insertCell(4);
+            cell5.innerHTML = `<a class="edit_delete" onClick="editReportsRow(this)">Edit</a>
                                 <a class="edit_delete" onClick="onDeleteReport(this)">Delete</a>`;
         }
     })
@@ -158,12 +160,13 @@ function editReportsRow(button) {
     const row = button.parentNode.parentNode;
     const reportId = row.cells[0];
     const reportName = row.cells[1];
-    const reportDescription = row.cells[2];
+    const reportLink = row.cells[2];
+    const reportDescription = row.cells[3];
     console.log(row);
     if (button.textContent === 'Edit') {
         // Switch to edit mode
         row.classList.add('edit-mode');
-        // reportId.innerHTML = `<input type="text" value="${reportId.textContent}">`;
+        reportLink.innerHTML = `<input type="text" value="${reportLink.textContent}">`;
         reportName.innerHTML = `<input type="text" value="${reportName.textContent}">`;
         reportDescription.innerHTML = `<input type="text" value="${reportDescription.textContent}">`;
         console.log(row);
@@ -171,14 +174,14 @@ function editReportsRow(button) {
     } else {
         // Save changes
         console.log(row);
-        // const newId = reportId.querySelector('input').value;
+        const newLink = reportLink.querySelector('input').value;
         const newName = reportName.querySelector('input').value;
         const newDescrition = reportDescription.querySelector('input').value;
-        // reportId.textContent = newId;
+        reportLink.textContent = newLink;
         reportName.textContent = newName;
         reportDescription.textContent = newDescrition;
         row.classList.remove('edit-mode');
-        UpdateUserReport(reportId.textContent,newName,newDescrition);
+        UpdateUserReport(reportId.textContent,newName,newDescrition, newLink);
         button.textContent = 'Edit';
     }
 }
@@ -332,9 +335,11 @@ function insertReportsRecord(data) {
     cell2 = newRow.insertCell(1);
     cell2.innerHTML = "Test Report";
     cell3 = newRow.insertCell(2);
-    cell3.innerHTML = "report description";
+    cell3.innerHTML = "https://www.youtube.com";
     cell4 = newRow.insertCell(3);
-    cell4.innerHTML = `<button class="edit_delete" onclick="editReportsRow(this)">Edit</button>
+    cell4.innerHTML = "report description";
+    cell5 = newRow.insertCell(4);
+    cell5.innerHTML = `<button class="edit_delete" onclick="editReportsRow(this)">Edit</button>
                         <button class="edit_delete" onclick="deleteRow(this)">Delete</button>`
 }
 
@@ -497,12 +502,13 @@ function onCloseDeleteRecord(){
     document.getElementById("deleteRecord").style.display = "none";
 }
 
-function UpdateUserReport(reportId, reportName, reportDescription){
+function UpdateUserReport(reportId, reportName, reportDescription, reportLink){
     const apiUrl = 'http://localhost:5039/api/Reports/updatereport';
     const postData = {
         reportId: reportId,
         name: reportName,
-        description: reportDescription
+        description: reportDescription,
+        link: reportLink
     };
     console.log("api post data", postData);
     fetch(apiUrl, {
