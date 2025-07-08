@@ -541,6 +541,7 @@ function UpdateUserReport(reportId, reportName, reportDescription, reportLink){
     })
     .then(data => {
         console.log('Success:', data);
+        window.location.reload();
     })
     .catch(error => {
         console.error('Error:', error);
@@ -573,6 +574,7 @@ function UpdateUserData(userid,firstName, lastName, email, roleId){
     })
     .then(data => {
         console.log('Success:', data);
+        window.location.reload();
     })
     .catch(error => {
         console.error('Error:', error);
